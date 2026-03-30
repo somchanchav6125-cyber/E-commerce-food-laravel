@@ -3,7 +3,7 @@
   "builds": [
     {
       "src": "public/index.php",
-      "use": "@vercel/php"
+      "use": "vercel-php@0.7.1"
     }
   ],
   "routes": [
@@ -16,5 +16,13 @@
       "dest": "/public/index.php"
     }
   ],
-  "outputDirectory": "public"
+  "outputDirectory": "public",
+  "env": {
+    "APP_ENV": "production",
+    "APP_DEBUG": "false",
+    "CACHE_DRIVER": "array",
+    "SESSION_DRIVER": "array",
+    "QUEUE_CONNECTION": "sync",
+    "LOG_CHANNEL": "errorlog"
+  }
 }
