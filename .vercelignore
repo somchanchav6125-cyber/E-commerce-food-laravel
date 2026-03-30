@@ -1,8 +1,19 @@
+# Development files
 .env
 .env.local
 .env.*.local
+.git
+.gitignore
+.github
+.idea
+.vscode
+*.log
+.DS_Store
+
+# Node modules (will be reinstalled by Vercel)
 node_modules
-vendor
+
+# Storage (except necessary folders)
 storage/*.key
 storage/logs/*
 storage/framework/cache/*
@@ -10,28 +21,34 @@ storage/framework/sessions/*
 storage/framework/views/*
 storage/app/private
 storage/app/public
+
+# Testing
+tests/
+test/
 .phpunit.result.cache
-tests/**
-test/**
-.git/**
-.gitignore
-.gitattributes
-.editorconfig
-*.md
-!README.md
-!VERCEL_DEPLOYMENT.md
-!QUICK_START_VERCEL.md
+phpunit.xml
+
+# Archives
+*.rar
+*.zip
 resources - Copy.rar
 resources - Copy.zip
 resources.rar
+
+# Other
 check_db.php
 Homestead.json
 Homestead.yaml
 .phpactor.json
 .phpunit.cache
 .fleet
-.idea
-.nova
-.vscode
-.zed
 Thumbs.db
+
+# Vendor dev packages (IMPORTANT: reduce size)
+vendor/bin
+vendor/*/tests
+vendor/*/Tests
+vendor/*/*.md
+!vendor/autoload.php
+!vendor/composer
+
