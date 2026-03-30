@@ -1,10 +1,12 @@
 [phases.setup]
 nixPkgs = ["php84" "php84Packages.composer" "nodejs_22"]
-aptPkgs = ["libpng-dev" "libjpeg-dev" "libfreetype6-dev" "libzip-dev"]
+aptPkgs = ["libpng-dev" "libjpeg62-turbo-dev" "libfreetype6-dev" "libzip-dev" "libonig-dev"]
 
 [phases.install]
 cmds = [
-  "composer install --optimize-autoloader --no-dev",
+  "docker-php-ext-configure gd --with-freetype --with-jpeg",
+  "docker-php-ext-install gd pdo pdo_mysql mbstring zip",
+  "composer install --optimize-autoloader --no-dev --no-scripts",
   "npm install",
   "npm run build"
 ]
