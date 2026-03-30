@@ -20,8 +20,12 @@ Route::middleware('guest')->group(function () {
     // Google Authentication
     Route::get('auth/google', [GoogleController::class, 'redirect'])
         ->name('auth.google');
-    Route::get('auth/google/callback', [GoogleController::class, 'callback']);
 });
+
+// Google callback - MUST be outside guest middleware
+// Because after login, user is authenticated, not guest anymore
+// But we add 'guest' check inside the callback method to avoid redirect loop
+Route::get('auth/google/callback', [GoogleController::class, 'callback']);
 
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')

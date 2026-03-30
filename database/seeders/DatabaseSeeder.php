@@ -21,14 +21,14 @@ class DatabaseSeeder extends Seeder
         );
 
         // បើចង់បានអ្នកប្រើសាកល្បងក៏បាន
-User::firstOrCreate(
-    ['email' => 'default@example.com'],
-    [
-        'name' => 'Default User',
-        'password' => 'password',
-        'role' => 'user',
-    ]
-);
+        User::firstOrCreate(
+            ['email' => 'default@example.com'],
+            [
+                'name' => 'Default User',
+                'password' => 'password',
+                'role' => 'user',
+            ]
+        );
 
         // ហៅ seeders ផ្សេងទៀត (បើមាន)
         $this->call([

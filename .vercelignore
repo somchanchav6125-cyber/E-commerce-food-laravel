@@ -1,0 +1,37 @@
+.env
+.env.local
+.env.*.local
+node_modules
+vendor
+storage/*.key
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/app/private
+storage/app/public
+.phpunit.result.cache
+tests/**
+test/**
+.git/**
+.gitignore
+.gitattributes
+.editorconfig
+*.md
+!README.md
+!VERCEL_DEPLOYMENT.md
+!QUICK_START_VERCEL.md
+resources - Copy.rar
+resources - Copy.zip
+resources.rar
+check_db.php
+Homestead.json
+Homestead.yaml
+.phpactor.json
+.phpunit.cache
+.fleet
+.idea
+.nova
+.vscode
+.zed
+Thumbs.db

@@ -46,7 +46,7 @@ class MenuController extends Controller
                 $query->orderBy('name', 'asc');
         }
 
-        $foods = $query->paginate(30)->withQueryString();
+        $foods = $query->paginate(12)->withQueryString();
         $categories = Category::all();
 
         return view('frontend.menu.menu', compact('foods', 'categories'));

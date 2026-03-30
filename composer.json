@@ -6,6 +6,7 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require-dev": {
+        "bref/bref": "*",
         "fakerphp/faker": "^1.23",
         "laravel/breeze": "^2.4",
         "laravel/pail": "^1.2.2",
@@ -86,7 +87,7 @@
         "google/apiclient": "2.19",
         "khqr-gateway/bakong-khqr-php": "^1.0",
         "laravel/sanctum": "^4.3",
-        "laravel/socialite": "*",
+        "laravel/socialite": "^5.26",
         "simplesoftwareio/simple-qrcode": "^4.2"
     }
 }

@@ -37,9 +37,18 @@ class ProductController extends Controller
             $query->where('category_id', $request->category_id);
         }
 
-        $products = $query->latest()->paginate(10)->withQueryString();
+        $products = $query->latest()->get();
+        $total = $products->count();
 
-        return view('admin.products.index', compact('products'));
+        // Return JSON for API requests
+        if ($request->wantsJson()) {
+            return response()->json([
+                'products' => $products,
+                'total' => $total
+            ]);
+        }
+
+        return view('admin.products.index', compact('products', 'total'));
     }
 
     public function create()
@@ -67,7 +76,12 @@ class ProductController extends Controller
             $data['image'] = $request->file('image')->store('products', 'public');
         }
 
-        Product::create($data);
+        $product = Product::create($data);
+
+        // Return JSON for API requests
+        if ($request->wantsJson()) {
+            return response()->json($product, 201);
+        }
 
         return redirect()->route('admin.products.index')
                ->with('success', 'ផលិតផលត្រូវបានបង្កើតដោយជោគជ័យ');
@@ -103,6 +117,11 @@ class ProductController extends Controller
 
         $product->update($data);
 
+        // Return JSON for API requests
+        if ($request->wantsJson()) {
+            return response()->json($product);
+        }
+
         return redirect()->route('admin.products.index')
                ->with('success', 'ផលិតផលត្រូវបានកែប្រែដោយជោគជ័យ');
     }
@@ -110,6 +129,9 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         if ($product->orderItems()->count() > 0) {
+            if (request()->wantsJson()) {
+                return response()->json(['error' => 'មិនអាចលុបផលិតផលដែលមានក្នុងការបញ្ជាទិញបានទេ'], 422);
+            }
             return back()->with('error', 'មិនអាចលុបផលិតផលដែលមានក្នុងការបញ្ជាទិញបានទេ');
         }
 
@@ -119,12 +141,24 @@ class ProductController extends Controller
         }
         $product->delete();
 
+        // Return JSON for API requests
+        if (request()->wantsJson()) {
+            return response()->json(['message' => 'ផលិតផលត្រូវបានលុបដោយជោគជ័យ']);
+        }
+
         return redirect()->route('admin.products.index')
                ->with('success', 'ផលិតផលត្រូវបានលុបដោយជោគជ័យ');
     }
 
     public function show(Product $product)
     {
+        $product->load('category', 'orderItems', 'carts');
+
+        // Return JSON for API requests
+        if (request()->wantsJson()) {
+            return response()->json($product);
+        }
+
         return view('admin.products.show', compact('product'));
     }
 }

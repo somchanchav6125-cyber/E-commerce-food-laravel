@@ -15,7 +15,10 @@ class User extends Authenticatable {
         'password',
         'role',
         'google_id',
-        'avatar'
+        'avatar',
+        'noworder',
+        'codeoder',
+        'phonenumber'
     ];
 
     protected $hidden = ['password', 'remember_token'];

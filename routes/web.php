@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\MenuController;
 use App\Http\Controllers\Frontend\OrderController as UserOrderController;
 use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\CheckoutController;
 
@@ -51,6 +52,10 @@ Route::middleware(['auth'])->group(function () {
 //orders
     Route::get('/orders', [UserOrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [UserOrderController::class, 'show'])->name('orders.show');
+//profile
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 //dashboard
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard')->middleware('admin');
 });

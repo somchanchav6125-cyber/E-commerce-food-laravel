@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 use Exception;
 
 class GoogleController extends Controller
 {
     /**
-     * Redirect to Google for authentication
+     * Redirect user to Google
      */
     public function redirect()
     {
@@ -24,38 +24,62 @@ class GoogleController extends Controller
      */
     public function callback()
     {
+        // If user is already authenticated, redirect to home
+        if (Auth::check()) {
+            return redirect('/');
+        }
+
         try {
+            // 👉 Get user from Google
             $googleUser = Socialite::driver('google')->user();
 
-            // Find existing user by google_id or email
-            $user = User::where('google_id', $googleUser->getId())
-                ->orWhere('email', $googleUser->getEmail())
-                ->first();
+            // 🔍 Check user by google_id
+            $user = User::where('google_id', $googleUser->getId())->first();
 
-            if ($user) {
-                // Update google_id if user exists but logged in with email before
-                if (!$user->google_id) {
+            // 🔍 If not found → check by email
+            if (!$user) {
+                $user = User::where('email', $googleUser->getEmail())->first();
+
+                if ($user) {
+                    // 🔗 Link Google account
                     $user->update([
                         'google_id' => $googleUser->getId(),
-                        'avatar' => $googleUser->getAvatar()
+                        'avatar' => $googleUser->getAvatar(),
                     ]);
                 }
-            } else {
-                // Create new user
+            }
+
+            // 🆕 If still no user → create new account (AUTO REGISTER)
+            if (!$user) {
                 $user = User::create([
-                    'name' => $googleUser->getName(),
+                    'name' => $googleUser->getName() ?? 'Google User',
                     'email' => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
                     'avatar' => $googleUser->getAvatar(),
-                    'password' => bcrypt(uniqid()) // Random password
+                    'password' => bcrypt(uniqid()), // random password
                 ]);
             }
 
+            // 🔄 Update avatar if empty
+            if (!$user->avatar && $googleUser->getAvatar()) {
+                $user->update([
+                    'avatar' => $googleUser->getAvatar(),
+                ]);
+            }
+
+            // 🔐 Login user
             Auth::login($user, true);
 
-            return redirect()->intended('/dashboard');
+            // Regenerate session to prevent fixation attacks
+            session()->regenerate();
+
+            // ✅ Redirect to HOME directly using header to avoid any middleware redirect
+            return redirect()->away('/');
+
         } catch (Exception $e) {
-            return redirect()->route('login')->with('error', 'Google authentication failed: ' . $e->getMessage());
+            Log::error('Google Login Error: ' . $e->getMessage());
+            return redirect()->route('home')
+                ->with('error', 'Google login failed: ' . $e->getMessage());
         }
     }
 }

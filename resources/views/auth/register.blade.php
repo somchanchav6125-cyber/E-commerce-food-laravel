@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Register</title>
 
+<!-- Khmer Font -->
+<link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 
 /* ===============================
@@ -14,7 +17,7 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
+    font-family:'Battambang', 'Segoe UI',sans-serif;
 }
 
 /* ===============================
@@ -234,8 +237,26 @@ button:hover{
 
 <div class="card">
 
-    <!-- Back -->
-    <a href="{{ route('login') }}" class="back">← Back</a>
+    <!-- Back Button -->
+    <a href="{{ route('home') }}" style="
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #7c3aed;
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        padding: 8px 12px;
+        border-radius: 8px;
+        background: rgba(124, 58, 237, 0.1);
+        transition: all 0.3s;
+    " onmouseover="this.style.background='rgba(124, 58, 237, 0.2)';this.style.transform='translateX(-5px)'"
+       onmouseout="this.style.background='rgba(124, 58, 237, 0.1)';this.style.transform='translateX(0)'">
+        <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        ត្រឡប់ក្រោយ
+    </a>
 
     <!-- Logo -->
     <div class="logo">

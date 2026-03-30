@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('payment_status')->after('payment_method')->default('pending')->nullable();
+            $table->decimal('total_amount', 10, 2)->after('total');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('payment_status');
+            $table->dropColumn('total_amount');
         });
     }
 };

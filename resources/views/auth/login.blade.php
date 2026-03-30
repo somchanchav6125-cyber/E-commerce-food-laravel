@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | E-Food</title>
 
+    <!-- Khmer Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         /* ===== Reset ===== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Battambang', 'Segoe UI', sans-serif;
             transition: all .3s ease;
         }
 
@@ -313,6 +316,27 @@
 
     <!-- Login Card -->
     <div class="card">
+
+        <!-- Back Button -->
+        <a href="{{ route('home') }}" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #7c3aed;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(124, 58, 237, 0.1);
+            transition: all 0.3s;
+        " onmouseover="this.style.background='rgba(124, 58, 237, 0.2)';this.style.transform='translateX(-5px)'"
+           onmouseout="this.style.background='rgba(124, 58, 237, 0.1)';this.style.transform='translateX(0)'">
+            <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            ត្រឡប់ក្រោយ
+        </a>
 
         <div class="logo-container">
             <img src="https://i.pinimg.com/1200x/53/0d/19/530d192bcc98fab1594a08888acf7acf.jpg">

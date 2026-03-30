@@ -3,7 +3,7 @@
 @section('title', 'ការបញ្ជាទិញរបស់ខ្ញុំ')
 
 @section('content')
-<h1 class="mb-4">ការបញ្ជាទិញរបស់ខ្ញុំ</h1>
+<h1 class="mb-4">ប្រវត្តិការបញ្ជាទិញរបស់ខ្ញុំ</h1>
 
 @if($orders->count() > 0)
     <div class="table-responsive">

@@ -110,6 +110,13 @@
             </div>
         @endforelse
     </div>
+
+    {{-- Pagination Links --}}
+    @if($foods->hasPages())
+        <div class="d-flex justify-content-center mt-5">
+            {{ $foods->links('pagination::bootstrap-5') }}
+        </div>
+    @endif
 </div>
 
 @push('styles')
@@ -131,7 +138,7 @@
     /* ===== Global Styles ===== */
     body {
         background: #f8fafc;
-        font-family: 'Inter', 'Khmer OS', system-ui, sans-serif;
+        font-family: 'Battambang', 'Inter', system-ui, sans-serif;
     }
 
     /* ===== Header Underline Animation ===== */

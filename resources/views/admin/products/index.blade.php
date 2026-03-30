@@ -243,7 +243,7 @@
                             </td>
 
                             <td>
-                                {{ $products->total() }}
+                                {{ $total ?? $products->count() }}
                             </td>
 
                         </tr>
@@ -261,11 +261,7 @@
             <div class="d-flex justify-content-between align-items-center mt-4">
 
                 <div>
-                    កំពុងបង្ហាញ {{ $products->count() }} ផលិតផលពីសរុប {{ $products->total() }}
-                </div>
-
-                <div>
-                    {{ $products->onEachSide(1)->links('pagination::bootstrap-5') }}
+                    កំពុងបង្ហាញ {{ $products->count() }} ផលិតផលពីសរុប {{ $total ?? $products->count() }}
                 </div>
 
             </div>

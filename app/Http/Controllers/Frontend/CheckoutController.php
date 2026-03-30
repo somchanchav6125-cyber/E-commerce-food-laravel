@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Mail\OrderSuccessMail;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use KHQR\BakongKHQR;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -179,6 +181,7 @@ class CheckoutController extends Controller
             'user_id' => Auth::id(),
             'total' => $total,
             'total_amount' => $total,
+            'payment_token' => bin2hex(random_bytes(16)), // Generate unique payment token
             'status' => 'pending',
             'payment_method' => $paymentMethod,
             'payment_status' => $paymentStatus,
@@ -207,6 +210,14 @@ class CheckoutController extends Controller
 
         // Send notification to Telegram
         $this->sendTelegramNotification($order);
+
+        // Send order confirmation email to user
+        try {
+            Mail::to($order->user->email)->send(new OrderSuccessMail($order));
+            Log::info('Order confirmation email sent to: ' . $order->user->email);
+        } catch (\Exception $e) {
+            Log::error('Failed to send order confirmation email: ' . $e->getMessage());
+        }
 
         // Redirect based on payment method
         if ($paymentMethod === 'qr') {

@@ -20,7 +20,7 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem 1rem;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Battambang', 'Poppins', sans-serif;
 }
 
 /* Breadcrumb */
